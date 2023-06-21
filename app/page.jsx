@@ -1,4 +1,5 @@
 import Feed from "@components/Feed";
+import Head from "next/head";
 
 const Home = () => {
   return (
