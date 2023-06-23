@@ -1,9 +1,12 @@
 import Feed from "@components/Feed";
 
 export default async function () {
-  const response = await fetch(`${process.env.REQUEST_URL}/api/prompt`, {
-    cache: "no-store",
-  });
+  const response = await fetch(
+    `${process.env.REQUEST_URL || "http://localhost:3000"}/api/prompt`,
+    {
+      cache: "no-store",
+    }
+  );
   const data = await response.json();
   // const [posts, setPosts] = useState([]);
   // useEffect(() => {
