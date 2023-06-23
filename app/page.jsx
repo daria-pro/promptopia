@@ -4,8 +4,10 @@ import { Suspense } from "react";
 import useSWR from "swr";
 const fetcher = (...args) =>
   fetch(...args, { cache: "no-store" }).then((res) => res.json());
+
 const Home = () => {
   const { data, error, isLoading } = useSWR("/api/prompt", fetcher);
+
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
@@ -16,9 +18,11 @@ const Home = () => {
         Promptopia is an open-source AI prompting tool for modern world to
         discover, create and share creative prompts
       </p>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Feed data={data} isLoading={isLoading} />
-      </Suspense>
+      {!isLoading && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Feed data={data} isLoading={isLoading} />
+        </Suspense>
+      )}
     </section>
   );
 };
