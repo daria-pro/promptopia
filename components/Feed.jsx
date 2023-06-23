@@ -16,17 +16,14 @@ const PromptCardList = ({ data, handleTagClick }) => {
     </div>
   );
 };
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (...args) =>
+  fetch(...args, { cache: "no-store" }).then((res) => res.json());
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
-  const { data, error, isLoading } = useSWR(
-    "/api/prompt",
-
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR("/api/prompt", fetcher);
   // useEffect(() => {
   //   const fetchPosts = async () => {
   //     const response = await fetch("/api/prompt", { cache: "no-store" });

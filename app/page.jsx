@@ -1,6 +1,7 @@
+"use-client";
 import Feed from "@components/Feed";
 
-export default function () {
+export default async function () {
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
