@@ -1,24 +1,6 @@
 import Feed from "@components/Feed";
 
 export default async function () {
-  const response = await fetch(
-    `${process.env.REQUEST_URL || "http://localhost:3000"}/api/prompt`,
-    {
-      cache: "no-store",
-    }
-  );
-  const data = await response.json();
-  // const [posts, setPosts] = useState([]);
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     // const response = await fetch("/api/prompt", { cache: "no-store" });
-  //     const response = await getData();
-  //     console.log(response);
-
-  //     setPosts(response);
-  //   };
-  //   fetchPosts();
-  // }, []);
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
@@ -29,7 +11,7 @@ export default async function () {
         Promptopia is an open-source AI prompting tool for modern world to
         discover, create and share creative prompts
       </p>
-      <Feed data={data} />
+      <Feed />
     </section>
   );
 }
