@@ -1,7 +1,7 @@
-"use-client";
 import Feed from "@components/Feed";
+import { Suspense } from "react";
 
-export default async function () {
+export default function () {
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
@@ -12,7 +12,9 @@ export default async function () {
         Promptopia is an open-source AI prompting tool for modern world to
         discover, create and share creative prompts
       </p>
-      <Feed />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Feed />
+      </Suspense>
     </section>
   );
 }
