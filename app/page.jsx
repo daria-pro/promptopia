@@ -1,7 +1,11 @@
+"use client";
 import Feed from "@components/Feed";
 import { Suspense } from "react";
-
-export default function () {
+import useSWR from "swr";
+const fetcher = (...args) =>
+  fetch(...args, { cache: "no-store" }).then((res) => res.json());
+const Home = () => {
+  const { data, error, isLoading } = useSWR("/api/prompt", fetcher);
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
@@ -13,8 +17,10 @@ export default function () {
         discover, create and share creative prompts
       </p>
       <Suspense fallback={<div>Loading...</div>}>
-        <Feed />
+        <Feed data={data} isLoading={isLoading} />
       </Suspense>
     </section>
   );
-}
+};
+
+export default Home;
