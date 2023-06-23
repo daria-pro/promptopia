@@ -1,5 +1,5 @@
 "use client";
-
+import useSWR from "swr";
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 
@@ -16,22 +16,26 @@ const PromptCardList = ({ data, handleTagClick }) => {
     </div>
   );
 };
-
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
+  const { data, error, isLoading } = useSWR(
+    "/api/prompt",
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("/api/prompt", { cache: "no-store" });
-      const data = await response.json();
+    fetcher
+  );
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const response = await fetch("/api/prompt", { cache: "no-store" });
+  //     const data = await response.json();
 
-      setPosts(data);
-    };
-    fetchPosts();
-  }, []);
+  //     setPosts(data);
+  //   };
+  //   fetchPosts();
+  // }, []);
 
   const filterPrompts = (searchText) => {
     const regex = new RegExp(searchText, "i");
@@ -62,6 +66,10 @@ const Feed = () => {
     setSearchedResults(searchResult);
   };
 
+  if (isLoading) {
+    return <h1>Loading posts</h1>;
+  }
+
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -80,7 +88,7 @@ const Feed = () => {
           handleTagClick={handleTagClick}
         />
       ) : (
-        <PromptCardList data={posts} handleTagClick={handleTagClick} />
+        <PromptCardList data={data} handleTagClick={handleTagClick} />
       )}
     </section>
   );
