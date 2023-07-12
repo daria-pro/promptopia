@@ -4,16 +4,14 @@ import Prompt from "@models/prompt";
 export const GET = async (request) => {
   try {
     await connectToDB();
-    const prompts = await Prompt.find().populate({
-      path: "creator",
-    });
+    const prompts = await Prompt.find({}).populate("creator");
 
     const response = new Response(JSON.stringify(prompts), {
       status: 200,
     });
 
     // Add a unique identifier to the URL to force a cache-busting reload
-    const url = new URL(req.url);
+    const url = new URL(request.url);
     url.searchParams.set("t", Date.now());
     response.headers.set(
       "Cache-Control",
